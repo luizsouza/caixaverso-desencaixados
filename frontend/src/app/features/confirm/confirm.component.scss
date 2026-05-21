@@ -1,0 +1,60 @@
+button {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 12px 14px;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.btn-guest {
+  background-color: #fff;
+  color: var(--color-text);
+  border: 1px solid black;
+}
+.btn-logout {
+  background-color: #fff;
+  color: var(--color-primary);
+  border: none;
+}
+.btn-ativar {
+  &:hover {
+    background-color: #0243bb;
+  }
+}
+.confirm-container {
+  padding: 20px;
+}
+
+.confirm-subtitle {
+  font-size: 0.8rem;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}
+.confirm-dica {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #5a5a5a;
+  margin-top: 10px;
+}
+
+.img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+}
+.confirm-title {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 4px;
+}

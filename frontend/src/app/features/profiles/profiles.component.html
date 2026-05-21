@@ -1,0 +1,37 @@
+<section class="profiles-wrapper">
+  <app-header
+    subtitle="Como prefere usar o sistema?"
+    description="Escolha as opções de acessibilidade que facilitam sua navegação"
+  ></app-header>
+  <div class="profiles-list">
+    @if (profiles().length === 0) {
+      <div class="col-span-2 text-center text-gray-500 py-8">
+        Nenhum perfil encontrado.
+      </div>
+    } @else {
+      @for (profile of profiles(); track profile.title) {
+        <app-button
+          [btnData]="profile"
+          groupName="accessibility-profiles"
+          [isActive]="selectedProfile()?.title === profile.title"
+          (select)="onProfileSelect(profile)"
+        >
+        </app-button>
+      }
+    }
+  </div>
+
+  <button (click)="clearSelection()" class="btn-guest">
+    Usar configuração padrão
+  </button>
+  <br />
+  <button
+    (click)="confirmProfile()"
+    [disabled]="!selectedProfile()"
+    class="btn-ativar"
+  >
+    Continuar
+  </button>
+  <br />
+  <button (click)="logout()" class="btn-guest">Sair</button>
+</section>

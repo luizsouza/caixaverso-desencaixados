@@ -1,0 +1,48 @@
+.login-title {
+  position: relative;
+  text-align: center;
+  color: var(--color-primary);
+  padding: 14px 0;
+}
+
+.login-title-highlight {
+  color: var(--color-primary-orange);
+}
+.login-description {
+  color: #5a5a5a;
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding-bottom: 12px;
+}
+.toggle-onoff {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  gap: 4px;
+  padding: 2px;
+  right: -18px;
+  top: -10px;
+}
+.confirm-button {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #9e9e9e;
+  padding: 4px;
+  background: none;
+  border: none;
+
+  &:hover {
+    color: var(--color-primary);
+    background-color: var(--color-gray-light);
+  }
+}
+
+.material-icons {
+  background: none;
+  border: none;
+}

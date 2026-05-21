@@ -1,0 +1,20 @@
+<section class="confirm-container">
+  <app-header />
+  <div class="img-container">
+    <img alt="Ícone de confirmação" width="90" src="svg/check-svg.jpeg" />
+  </div>
+  <h3 class="confirm-title">Pronto! Seus sistemas agora se adaptam a você</h3>
+  <p class="confirm-subtitle">
+    Suas preferências de acessibilidade já estão ativas nos sistemas compatíveis
+    da CAIXA
+  </p>
+  <p class="confirm-subtitle">
+    Sempre que acessar um novo sistema, a configuração será aplicada
+    automaticamente
+  </p>
+
+  <button (click)="minimizarApp()" class="btn-ativar">Começar a usar</button>
+  <br />
+  <button (click)="goBack()" class="btn-guest">Editar preferências</button>
+  <button (click)="logout()" class="btn-logout">Sair</button>
+</section>

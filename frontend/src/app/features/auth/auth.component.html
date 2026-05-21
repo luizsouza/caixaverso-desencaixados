@@ -1,0 +1,42 @@
+<section class="login-wrapper">
+  <div>
+    <app-header
+      [subtitle]="'Suas preferências, do mesmo jeito, em sistemas compatíveis'"
+      [description]="
+        'O CAIXA Adapta mantém suas preferências de navegação, deixando a experiência mais clara e confortável'
+      "
+    ></app-header>
+  </div>
+
+  <form class="login-container" [formGroup]="loginForm" (submit)="login()">
+    <h3>Ativar o CAIXA Adapta</h3>
+    <p>Ative para aplicar suas configurações de navegação automaticamente</p>
+    <p class="login-aviso">
+      Use seu e-mail e senha para salvar suas preferências
+    </p>
+
+    <label for="Email">E-mail</label>
+    <input
+      id="email"
+      type="text"
+      formControlName="email"
+      placeholder="seu.email@exemplo.com"
+    />
+
+    <label for="Senha">Senha</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      placeholder="*********"
+    />
+    @if (!isValid()) {
+      <span class="error-msg">Credenciais inválidas!</span>
+    }
+    <button class="btn-ativar">Ativar CAIXA Adapta</button>
+    <button class="btn-guest">Continuar sem ativar</button>
+  </form>
+  <p class="txt-footer">
+    Você pode ajustar suas configurações a qualquer momento
+  </p>
+</section>

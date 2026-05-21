@@ -1,0 +1,52 @@
+.profiles-wrapper {
+  padding: 20px;
+}
+.profiles-description {
+  color: #5a5a5a;
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding-bottom: 18px;
+}
+
+.profiles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.btn-guest {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+.btn-ativar {
+  &:hover {
+    background-color: #0243bb;
+  }
+  &:disabled {
+    background-color: #d8d8d8;
+    color: #636363;
+    cursor: not-allowed;
+  }
+}
+
+.profiles-dica {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #5a5a5a;
+  margin-top: 10px;
+}

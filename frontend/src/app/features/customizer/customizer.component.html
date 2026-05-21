@@ -1,0 +1,104 @@
+<section class="customizer-container">
+  <app-header
+    subtitle="Deixe a navegação do sistema mais confortável"
+    description="Escolha as preferências que facilitam a leitura e a navegação"
+  />
+  <section class="customizer-content">
+    <div class="customizer-section">
+      <p class="customizer-section-title">Tamanho do Texto</p>
+      <p class="customizer-section-subtitle">
+        Ajuste o tamanho das letras conforme sua necessidade
+      </p>
+      <div>
+        <p class="customizer-section-description">
+          {{ `Tamanho atual: ${config.fontSize}%` }}
+        </p>
+        <p-slider
+          [step]="1"
+          [min]="100"
+          [max]="180"
+          [(ngModel)]="config.fontSize"
+          (ngModelChange)="update('fontSize', $event)"
+          class="w-56"
+        />
+      </div>
+    </div>
+    <div class="customizer-section">
+      <p class="customizer-section-title">Contraste</p>
+      <p class="customizer-section-subtitle">
+        Melhore a visualização de textos e botões importantes
+      </p>
+      <div>
+        <p-selectbutton
+          [options]="optionsContraste"
+          size="small"
+          [ngModel]="config.highContrast"
+          (ngModelChange)="update('highContrast', $event)"
+        />
+      </div>
+    </div>
+    <div class="customizer-section">
+      <p class="customizer-section-title">Aparência da tela</p>
+      <p class="customizer-section-subtitle">
+        Escolha como a tela será exibida para você
+      </p>
+      <div>
+        <p-selectbutton
+          [options]="optionsTheme"
+          size="small"
+          [ngModel]="config.invertColors"
+          (ngModelChange)="update('invertColors', $event)"
+        />
+      </div>
+    </div>
+    <div class="customizer-section">
+      <p class="customizer-section-title">Espaçamento entre elementos</p>
+      <p class="customizer-section-subtitle">
+        Aumente o espaço entre informações para facilitar a leitura
+      </p>
+      <div>
+        <p class="customizer-section-description">
+          {{ `Espaçamento atual: ${config.letterSpacing}` }}
+        </p>
+        <p-slider
+          class="w-56"
+          min="0"
+          max="0.2"
+          step="0.01"
+          [ngModel]="config.letterSpacing"
+          (ngModelChange)="update('letterSpacing', $event)"
+        />
+      </div>
+    </div>
+    <div class="customizer-section">
+      <p class="customizer-section-title">Guia de leitura</p>
+      <p class="customizer-section-subtitle">
+        Ative um destaque visual na linha de leitura para tornar a leitura mais
+        confortável
+      </p>
+      <div>
+        <p-toggleswitch
+          [ngModel]="config.readingGuide"
+          (ngModelChange)="update('readingGuide', $event)"
+        />
+      </div>
+    </div>
+    <div class="customizer-section">
+      <p class="customizer-section-title">Navegação por teclados</p>
+      <p class="customizer-section-subtitle">
+        Mostre o destaque na tela e facilite o uso do sistema sem mouse
+      </p>
+      <div>
+        <p-toggleswitch
+          [ngModel]="config.focusHighlight"
+          (ngModelChange)="update('focusHighlight', $event)"
+        />
+      </div>
+    </div>
+    <button (click)="salvarPreferencias()" class="btn-ativar">
+      Aplicar preferências
+    </button>
+    <br />
+    <button (click)="goBack()" class="btn-guest">Voltar</button>
+  </section>
+</section>

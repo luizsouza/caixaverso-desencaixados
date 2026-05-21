@@ -1,0 +1,19 @@
+@if (btnData()) {
+  <label class="btn-profile" [class.active]="isActive()">
+    <input 
+      type="radio" 
+      [name]="groupName()" 
+      [checked]="isActive()"
+      (change)="select.emit()"
+    >
+    <div class="btn-icon">
+      <span class="material-icons">{{ btnData()?.icon }}</span>
+    </div>
+    <div class="btn-content">
+      <p class="btn-content-title">{{ btnData()?.title }}</p>
+      <p class="btn-content-description">
+        {{ btnData()?.description }}
+      </p>
+    </div>
+  </label>
+}

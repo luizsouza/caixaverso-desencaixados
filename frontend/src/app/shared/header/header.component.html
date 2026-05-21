@@ -1,0 +1,28 @@
+<h1 class="login-title">
+  CAIXA <span class="login-title-highlight">Adapta</span>
+
+  <div class="toggle-onoff">
+    @if (actualRoute() === "/confirm") {
+      <button (click)="minimizarApp()" class="confirm-button">
+        <span class="material-icons">close_small</span>
+      </button>
+    } @else if (!(actualRoute() === "/login")) {
+      <p>{{ checked() ? "Ativada" : "Desativada" }}</p>
+      <p-toggleswitch
+        [ngModel]="checked()"
+        (ngModelChange)="toggleEnabled($event)"
+      />
+    }
+  </div>
+</h1>
+
+@if (subtitle()) {
+  <h3 class="login-subtitle">
+    {{ subtitle() }}
+  </h3>
+}
+@if (description()) {
+  <p class="login-description">
+    {{ description() }}
+  </p>
+}
