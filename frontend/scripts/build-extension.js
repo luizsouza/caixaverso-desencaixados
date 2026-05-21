@@ -19,6 +19,19 @@ fs.writeFileSync(path.join(iconsDir, 'icon16.png'), logoBuffer);
 fs.writeFileSync(path.join(iconsDir, 'icon48.png'), logoBuffer);
 fs.writeFileSync(path.join(iconsDir, 'icon128.png'), logoBuffer);
 
+// Copy extension core files from chrome/ directory to extension/
+const chromeDir = path.join(__dirname, '../chrome');
+if (fs.existsSync(chromeDir)) {
+    const chromeFiles = fs.readdirSync(chromeDir);
+    for (const file of chromeFiles) {
+        const srcPath = path.join(chromeDir, file);
+        const destPath = path.join(extensionDir, file);
+        if (fs.lstatSync(srcPath).isFile()) {
+            fs.copyFileSync(srcPath, destPath);
+        }
+    }
+}
+
 // Move files from browser/ to popup/ if necessary (Angular 17+ application builder)
 if (fs.existsSync(browserDir)) {
     const files = fs.readdirSync(browserDir);
