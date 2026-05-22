@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "AccessiFlow",
+  "name": "CaixaAdapta",
   "version": "1.0.0",
   "description": "Personalize qualquer site para suas necessidades de acessibilidade.",
   "permissions": ["activeTab", "storage", "scripting"],

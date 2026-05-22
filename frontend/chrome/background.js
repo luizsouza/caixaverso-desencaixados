@@ -2,7 +2,7 @@
 // Extension service workers are not subject to CORS restrictions.
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('AccessiFlow Extension Installed');
+  console.log('CaixaAdapta Extension Installed');
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
