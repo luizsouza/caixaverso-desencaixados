@@ -90,6 +90,7 @@ class UsuarioPerfilServiceTest {
     void buscarPorEmailComSucesso() {
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("USER@caixa.gov.br");
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
         when(usuarioRepository.findByEmail("user@caixa.gov.br")).thenReturn(Optional.of(usuarioExistente));
         when(jwtService.tokenValido("token-valido", "user@caixa.gov.br")).thenReturn(true);
         UsuarioPerfil result = service.buscarPorEmail(req, "Bearer token-valido");
@@ -106,7 +107,7 @@ class UsuarioPerfilServiceTest {
     void buscarPorEmailUsuarioNaoEncontrado() {
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail("user@caixa.gov.br")).thenReturn(Optional.empty());
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(false);
         assertThatThrownBy(() -> service.buscarPorEmail(req, "Bearer x"))
                 .isInstanceOf(ApiException.class)
                 .hasMessageContaining("Usuario nao encontrado");
@@ -130,17 +131,19 @@ class UsuarioPerfilServiceTest {
     void tokenNaoBateComUsuario() {
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail(anyString())).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
+        when(jwtService.tokenValido("outro", "user@caixa.gov.br")).thenReturn(false);
         assertThatThrownBy(() -> service.buscarPorEmail(req, "Bearer outro"))
                 .isInstanceOf(ApiException.class)
                 .hasMessageContaining("Token invalido");
     }
     @Test
-    void tokenSemTokenNoUsuarioFalha() {
+    void tokenRejeitadoPeloJwtServiceFalha() {
         usuarioExistente.setToken(null);
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail(anyString())).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
+        when(jwtService.tokenValido("qq", "user@caixa.gov.br")).thenReturn(false);
         assertThatThrownBy(() -> service.buscarPorEmail(req, "Bearer qq"))
                 .isInstanceOf(ApiException.class);
     }
@@ -149,17 +152,19 @@ class UsuarioPerfilServiceTest {
         usuarioExistente.setTokenExpiraEm(LocalDateTime.now().minusMinutes(1));
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail(anyString())).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
+        when(jwtService.tokenValido("token-valido", "user@caixa.gov.br")).thenReturn(false);
         assertThatThrownBy(() -> service.buscarPorEmail(req, "Bearer token-valido"))
                 .isInstanceOf(ApiException.class)
-                .hasMessageContaining("expirado");
+                .hasMessageContaining("Token invalido ou expirado");
     }
     @Test
-    void tokenSemDataExpiracaoFalha() {
+    void tokenSemDataExpiracaoFalhaQuandoJwtServiceRejeita() {
         usuarioExistente.setTokenExpiraEm(null);
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail(anyString())).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
+        when(jwtService.tokenValido("token-valido", "user@caixa.gov.br")).thenReturn(false);
         assertThatThrownBy(() -> service.buscarPorEmail(req, "Bearer token-valido"))
                 .isInstanceOf(ApiException.class);
     }
@@ -167,7 +172,7 @@ class UsuarioPerfilServiceTest {
     void jwtServiceConsideraTokenInvalido() {
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail(anyString())).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
         when(jwtService.tokenValido(anyString(), anyString())).thenReturn(false);
         assertThatThrownBy(() -> service.buscarPorEmail(req, "Bearer token-valido"))
                 .isInstanceOf(ApiException.class);
@@ -182,6 +187,7 @@ class UsuarioPerfilServiceTest {
         req.setEspacamento(2.0f);
         req.setGuiaLeitura(true);
         req.setNavegTeclado(true);
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
         when(usuarioRepository.findByEmail("user@caixa.gov.br")).thenReturn(Optional.of(usuarioExistente));
         when(jwtService.tokenValido(anyString(), anyString())).thenReturn(true);
         when(usuarioRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
@@ -202,7 +208,7 @@ class UsuarioPerfilServiceTest {
         req.setEspacamento(2.0f);
         req.setGuiaLeitura(true);
         req.setNavegTeclado(true);
-        when(usuarioRepository.findByEmail("user@caixa.gov.br")).thenReturn(Optional.empty());
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(false);
         assertThatThrownBy(() -> service.atualizarPreferencias(req, "Bearer token-valido"))
                 .isInstanceOf(ApiException.class);
     }
@@ -210,7 +216,7 @@ class UsuarioPerfilServiceTest {
     void buscarAuditoriaComSucesso() {
         BuscarPerfilRequest req = new BuscarPerfilRequest();
         req.setEmail("user@caixa.gov.br");
-        when(usuarioRepository.findByEmail(anyString())).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.existsByEmail("user@caixa.gov.br")).thenReturn(true);
         when(jwtService.tokenValido(anyString(), anyString())).thenReturn(true);
         when(auditoriaService.buscarPorUsuario("user@caixa.gov.br"))
                 .thenReturn(List.of(new AuditoriaPerfil()));
