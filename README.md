@@ -1,27 +1,27 @@
 # CAIXA Adapta / AccessiFlow
 
-Projeto unificado desenvolvido para o hackathon, composto por uma API backend e uma extensao de navegador voltada para acessibilidade web.
+Projeto unificado desenvolvido para o hackathon, composto por uma API backend e uma extensão de navegador voltada para acessibilidade web.
 
-O objetivo principal do projeto e permitir que usuarios autentiquem com uma conta corporativa, configurem preferencias de acessibilidade e apliquem esses ajustes diretamente nas paginas acessadas pelo navegador por meio de um plugin/extensao.
+O objetivo principal do projeto é permitir que usuários autentiquem com uma conta corporativa, configurem preferências de acessibilidade e apliquem esses ajustes diretamente nas páginas acessadas pelo navegador por meio de um plugin/extensão.
 
-## Visao Geral
+## Visão Geral
 
-O projeto esta dividido em duas partes:
+O projeto está dividido em duas partes:
 
-- `backend/`: API Java com Spring Boot, responsavel por autenticacao, persistencia de preferencias e auditoria.
-- `frontend/`: aplicacao Angular que funciona como interface da extensao de navegador e gera o pacote final do plugin.
+- `backend/`: API Java com Spring Boot, responsável por autenticação, persistência de preferências e auditoria.
+- `frontend/`: aplicação Angular que funciona como interface da extensão de navegador e gera o pacote final do plugin.
 
-A extensao injeta configuracoes de acessibilidade na pagina ativa usando `content.js`, enquanto o `background.js` atua como camada de apoio para chamadas HTTP e integracao com o navegador.
+A extensão injeta configurações de acessibilidade na página ativa usando `content.js`, enquanto o `background.js` atua como camada de apoio para chamadas HTTP e integração com o navegador.
 
 ## Funcionalidades
 
-- Login com usuario corporativo `@caixa.gov.br`.
-- Persistencia de preferencias de acessibilidade por usuario.
-- Aplicacao de ajustes visuais em paginas abertas no navegador.
-- Suporte a tamanho de texto, contraste, inversao de cores, espacamento, guia de leitura e destaque de foco.
-- Auditoria de cadastro, login e alteracoes de perfil.
+- Login com usuário corporativo `@caixa.gov.br`.
+- Persistência de preferências de acessibilidade por usuário.
+- Aplicação de ajustes visuais em páginas abertas no navegador.
+- Suporte a tamanho de texto, contraste, inversão de cores, espaçamento, guia de leitura e destaque de foco.
+- Auditoria de cadastro, login e alterações de perfil.
 - API documentada via Swagger/OpenAPI.
-- Build de extensao baseado em Manifest V3.
+- Build de extensão baseado em Manifest V3.
 
 ## Tecnologias
 
@@ -45,7 +45,7 @@ Frontend/plugin:
 - Web Extensions API
 - Manifest V3
 
-## Pre-requisitos
+## Pré-requisitos
 
 Antes de iniciar, instale:
 
@@ -54,7 +54,7 @@ Antes de iniciar, instale:
 - Docker e Docker Compose
 - Node.js 18 ou superior
 - NPM
-- Navegador compativel com extensoes, como Chrome, Edge, Brave ou Firefox
+- Navegador compatível com extensões, como Chrome, Edge, Brave ou Firefox
 
 ## Como Rodar o Backend
 
@@ -76,32 +76,32 @@ Inicie a API:
 mvn spring-boot:run
 ```
 
-A API ficara disponivel em:
+A API ficará disponível em:
 
 ```text
 http://localhost:8080
 ```
 
-A documentacao Swagger ficara disponivel em:
+A documentação Swagger ficará disponível em:
 
 ```text
 http://localhost:8080/swagger-ui.html
 ```
 
-## Usuario Padrao
+## Usuário Padrão
 
-Ao iniciar o backend com o banco configurado, o sistema cria automaticamente um usuario padrao para testes:
+Ao iniciar o backend com o banco configurado, o sistema cria automaticamente um usuário padrão para testes:
 
 ```text
 login: usuario@caixa.gov.br
 senha: SenhaForte123
 ```
 
-Esse usuario permite que a banca teste o fluxo principal sem precisar cadastrar manualmente uma conta antes de usar a extensao.
+Esse usuário permite que a banca teste o fluxo principal sem precisar cadastrar manualmente uma conta antes de usar a extensão.
 
 ## Como Rodar o Frontend em Desenvolvimento
 
-O frontend pode ser executado como uma aplicacao Angular comum para desenvolvimento e validacao das telas.
+O frontend pode ser executado como uma aplicação Angular comum para desenvolvimento e validação das telas.
 
 Em outro terminal, entre na pasta do frontend:
 
@@ -109,7 +109,7 @@ Em outro terminal, entre na pasta do frontend:
 cd frontend
 ```
 
-Instale as dependencias:
+Instale as dependências:
 
 ```bash
 npm install
@@ -121,15 +121,15 @@ Inicie o servidor de desenvolvimento:
 npm start
 ```
 
-A interface ficara disponivel em:
+A interface ficará disponível em:
 
 ```text
 http://localhost:4200
 ```
 
-Esse modo e util para testar telas, login e integracao com a API. Para testar o comportamento real como plugin de navegador, gere e instale a extensao seguindo os passos abaixo.
+Esse modo é útil para testar telas, login e integração com a API. Para testar o comportamento real como plugin de navegador, gere e instale a extensão seguindo os passos abaixo.
 
-## Como Gerar a Extensao/Plugin
+## Como Gerar a Extensão/Plugin
 
 Com o backend rodando em `http://localhost:8080`, execute:
 
@@ -140,12 +140,12 @@ npm run build:extension
 
 Esse comando:
 
-1. Executa o build de producao do Angular.
-2. Gera a interface da extensao em `frontend/extension/popup/`.
+1. Executa o build de produção do Angular.
+2. Gera a interface da extensão em `frontend/extension/popup/`.
 3. Copia os arquivos do plugin, como `manifest.json`, `background.js` e `content.js`.
 4. Prepara a pasta `frontend/extension/` para ser carregada no navegador.
 
-Ao final, a estrutura gerada sera semelhante a:
+Ao final, a estrutura gerada será semelhante a:
 
 ```text
 frontend/extension/
@@ -156,26 +156,26 @@ frontend/extension/
   popup/
 ```
 
-## Como Instalar a Extensao no Navegador
+## Como Instalar a Extensão no Navegador
 
 ### Chrome, Edge ou Brave
 
-1. Gere a extensao com `npm run build:extension`.
-2. Abra o gerenciador de extensoes:
+1. Gere a extensão com `npm run build:extension`.
+2. Abra o gerenciador de extensões:
    - Chrome: `chrome://extensions/`
    - Edge: `edge://extensions/`
    - Brave: `brave://extensions/`
 3. Ative o modo de desenvolvedor.
-4. Clique em `Carregar sem compactacao` ou `Load unpacked`.
+4. Clique em `Carregar sem compactação` ou `Load unpacked`.
 5. Selecione a pasta `frontend/extension/`.
-6. Abra o plugin pela barra de extensoes do navegador.
-7. Faca login com o usuario padrao ou outro usuario cadastrado.
-8. Escolha/aplique as preferencias de acessibilidade.
-9. A extensao enviara as configuracoes para a aba ativa por meio do `content.js`.
+6. Abra o plugin pela barra de extensões do navegador.
+7. Faça login com o usuário padrão ou outro usuário cadastrado.
+8. Escolha/aplique as preferências de acessibilidade.
+9. A extensão enviará as configurações para a aba ativa por meio do `content.js`.
 
 ### Firefox
 
-1. Gere a extensao com `npm run build:extension`.
+1. Gere a extensão com `npm run build:extension`.
 2. Acesse `about:debugging`.
 3. Clique em `This Firefox`.
 4. Clique em `Load Temporary Add-on`.
@@ -185,17 +185,17 @@ frontend/extension/
 
 1. Inicie o PostgreSQL com Docker Compose.
 2. Inicie o backend Spring Boot.
-3. Gere a extensao com `npm run build:extension`.
+3. Gere a extensão com `npm run build:extension`.
 4. Carregue a pasta `frontend/extension/` no navegador.
-5. Abra a extensao/plugin.
+5. Abra a extensão/plugin.
 6. Realize login com `usuario@caixa.gov.br` e senha `SenhaForte123`.
-7. Configure as preferencias de acessibilidade.
-8. Navegue para uma pagina qualquer.
-9. A extensao aplica os ajustes visuais na pagina ativa.
+7. Configure as preferências de acessibilidade.
+8. Navegue para uma página qualquer.
+9. A extensão aplica os ajustes visuais na página ativa.
 
-## Configuracoes Importantes
+## Configurações Importantes
 
-A API usa por padrao:
+A API usa por padrão:
 
 ```text
 Backend: http://localhost:8080
@@ -204,7 +204,7 @@ PostgreSQL: localhost:5433
 Base da API no frontend: http://localhost:8080/api/v1
 ```
 
-As principais variaveis de ambiente suportadas pelo backend sao:
+As principais variáveis de ambiente suportadas pelo backend são:
 
 ```text
 SPRING_DATASOURCE_URL
@@ -232,8 +232,8 @@ cd frontend
 npm test
 ```
 
-## Observacoes para Avaliacao
+## Observações para Avaliação
 
-Este projeto foi pensado para ser demonstrado principalmente como uma extensao de navegador. O modo `npm start` ajuda no desenvolvimento da interface, mas a experiencia final acontece ao carregar `frontend/extension/` no navegador.
+Este projeto foi pensado para ser demonstrado principalmente como uma extensão de navegador. O modo `npm start` ajuda no desenvolvimento da interface, mas a experiência final acontece ao carregar `frontend/extension/` no navegador.
 
-Para a demonstracao completa, mantenha o backend rodando antes de abrir o plugin. A extensao depende da API para autenticar o usuario e salvar as preferencias de acessibilidade.
+Para a demonstração completa, mantenha o backend rodando antes de abrir o plugin. A extensão depende da API para autenticar o usuário e salvar as preferências de acessibilidade.
