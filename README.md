@@ -181,6 +181,18 @@ frontend/extension/
 4. Clique em `Load Temporary Add-on`.
 5. Selecione o arquivo `frontend/extension/manifest.json`.
 
+###  Build e Execução (Modo Web)
+
+Para gerar a versão web padrão do projeto e rodar localmente utilizando `npx` (com um servidor estático):
+
+```bash
+npm run build:extension
+
+npx http-server extension/popup
+ou
+npx serve extension/popup
+```
+
 ## Fluxo Esperado de Uso
 
 1. Inicie o PostgreSQL com Docker Compose.
