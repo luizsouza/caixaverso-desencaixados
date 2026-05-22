@@ -1,4 +1,4 @@
-# CAIXA Adapta / AccessiFlow
+# CAIXA Adapta
 
 Projeto unificado desenvolvido para o hackathon, composto por uma API backend e uma extensão de navegador voltada para acessibilidade web.
 
