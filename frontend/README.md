@@ -50,6 +50,18 @@ npm run build:extension
 
 > **Nota:** Este comando realiza o build do Angular (gerando o código de produção) e também executa o script `scripts/build-extension.js`, que estrutura automaticamente a pasta final chamada **`extension/`** com todos os assets e o `manifest.json`.
 
+### 4. Build e Execução (Modo Web)
+
+Para gerar a versão web padrão do projeto e rodar localmente utilizando `npx` (com um servidor estático):
+
+```bash
+npm run build:extension
+
+npx http-server extension/popup
+ou
+npx serve extension/popup
+```
+
 ## 🌐 Como instalar a Extensão no Navegador
 
 Após executar o comando `npm run build:extension`, a pasta `extension/` estará pronta para ser instalada localmente no seu navegador.
