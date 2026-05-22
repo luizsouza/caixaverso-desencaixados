@@ -99,7 +99,7 @@ APP_CORS_ALLOWED_ORIGIN
 APP_CORS_ALLOWED_ORIGIN_PATTERNS
 ```
 
-Por padrão, a API aceita requisições vindas do frontend local e de extensões de navegador:
+Por padrão, a API aceita as requisições vindas do frontend local e de extensões de navegador:
 
 ```text
 http://localhost:4200
