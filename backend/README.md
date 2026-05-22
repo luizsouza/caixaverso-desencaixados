@@ -1,6 +1,6 @@
 # Acessibilidade API
 
-API desenvolvida para hackathon com o objetivo de persistir preferencias de acessibilidade de usuarios corporativos e registrar auditoria de alteracoes.
+API desenvolvida para o hackathon com o objetivo de persistir preferências de acessibilidade de usuários corporativos, autenticar o uso da extensão de navegador e registrar auditoria das alterações realizadas.
 
 ## Tecnologias
 
@@ -9,32 +9,40 @@ API desenvolvida para hackathon com o objetivo de persistir preferencias de aces
 - Maven
 - PostgreSQL
 - Docker Compose
-- BCrypt para senha
-- JWT para autenticacao
-- Swagger/OpenAPI para documentacao interativa
+- BCrypt para criptografia de senha
+- JWT para autenticação
+- Swagger/OpenAPI para documentação interativa
+- JaCoCo para relatório e verificação de cobertura de testes
 
 ## Funcionalidades
 
-- Cadastro de perfil de usuario
-- Validacao de e-mail corporativo `@caixa.gov.br`
-- Senha criptografada com BCrypt
-- Login com token JWT
-- Persistencia de preferencias de acessibilidade
-- Auditoria de cadastro, login e alteracoes de perfil
-- Tratamento padronizado de erros HTTP
-- CORS configuravel para integracao com front Angular
+- Cadastro de perfil de usuário.
+- Validação de e-mail corporativo `@caixa.gov.br`.
+- Senha criptografada com BCrypt.
+- Login com geração de token JWT.
+- Persistência de preferências de acessibilidade.
+- Consulta e atualização de perfil autenticado.
+- Auditoria de cadastro, login e alterações de perfil.
+- Tratamento padronizado de erros HTTP.
+- CORS configurável para integração com o frontend Angular e com extensões de navegador.
 
-## Como rodar
+## Como Rodar
+
+Entre na pasta do backend:
+
+```bash
+cd backend
+```
 
 Suba o PostgreSQL:
 
-```powershell
+```bash
 docker compose up -d
 ```
 
 Inicie a API:
 
-```powershell
+```bash
 mvn spring-boot:run
 ```
 
@@ -44,46 +52,66 @@ A API roda em:
 http://localhost:8080
 ```
 
-A documentacao interativa fica em:
+A documentação interativa fica em:
 
 ```text
 http://localhost:8080/swagger-ui.html
 ```
 
-## Usuario padrao para testes
+## Banco de Dados
 
-Ao iniciar a API com o banco configurado, o sistema cria automaticamente um usuario padrao caso ele ainda nao exista:
+O `docker-compose.yml` sobe um PostgreSQL 16 com as seguintes configurações padrão:
+
+```text
+host: localhost
+porta: 5433
+banco: acessibilidade_db
+usuário: acessibilidade_user
+senha: acessibilidade_pass
+```
+
+A aplicação usa `spring.jpa.hibernate.ddl-auto=update`, portanto as tabelas são criadas/atualizadas automaticamente durante a execução local.
+
+## Usuário Padrão para Testes
+
+Ao iniciar a API com o banco configurado, o sistema cria automaticamente um usuário padrão caso ele ainda não exista:
 
 ```text
 login: usuario@caixa.gov.br
 senha: SenhaForte123
 ```
 
-Esse usuario foi criado para que a banca avaliadora consiga realizar testes de usabilidade no sistema sem depender do fluxo de cadastro manual. A criacao acontece apenas quando o registro ainda nao existe no banco, evitando duplicidade nas proximas execucoes.
+Esse usuário foi criado para que a banca avaliadora consiga testar o fluxo de autenticação e uso da extensão sem depender do cadastro manual. A criação acontece apenas quando o registro ainda não existe no banco, evitando duplicidade nas próximas execuções.
 
-## Configuracoes
+## Configurações
 
-As principais configuracoes ficam em `src/main/resources/application.yaml`.
+As principais configurações ficam em `src/main/resources/application.yaml`.
 
-Variaveis de ambiente suportadas:
+Variáveis de ambiente suportadas:
 
 ```text
 SPRING_DATASOURCE_URL
 SPRING_DATASOURCE_USERNAME
 SPRING_DATASOURCE_PASSWORD
 JWT_SECRET
+JWT_EXPIRATION_MINUTES
 APP_CORS_ALLOWED_ORIGIN
+APP_CORS_ALLOWED_ORIGIN_PATTERNS
 ```
 
-Por padrao, o front liberado no CORS e:
+Por padrão, a API aceita requisições vindas do frontend local e de extensões de navegador:
 
 ```text
 http://localhost:4200
+http://127.0.0.1:4200
+chrome-extension://*
+moz-extension://*
+edge-extension://*
 ```
 
 ## Endpoints
 
-### Criar perfil
+### Criar Perfil
 
 ```http
 POST /api/v1/perfis
@@ -104,6 +132,23 @@ Body:
 }
 ```
 
+Resposta:
+
+```json
+{
+  "id": 1,
+  "email": "usuario@caixa.gov.br",
+  "tamanhoTexto": 16,
+  "contraste": true,
+  "aparencia": false,
+  "espacamento": 1.5,
+  "guiaLeitura": true,
+  "navegTeclado": true,
+  "criadoEm": "2026-05-21T20:00:00",
+  "atualizadoEm": "2026-05-21T20:00:00"
+}
+```
+
 ### Login
 
 ```http
@@ -119,24 +164,28 @@ Body:
 }
 ```
 
-Resposta inclui o token JWT:
+Resposta:
 
 ```json
 {
   "mensagem": "Login realizado com sucesso.",
   "token": "...",
-  "tokenExpiraEm": "2026-05-20T16:45:00",
-  "email": "usuario@caixa.gov.br",
-  "tamanhoTexto": 16,
-  "contraste": true,
-  "aparencia": false,
-  "espacamento": 1.5,
-  "guiaLeitura": true,
-  "navegTeclado": true
+  "tokenExpiraEm": "2026-05-21T23:00:00",
+  "config": {
+    "preferencia": "usuario@caixa.gov.br",
+    "tamanhoTexto": 16,
+    "contraste": false,
+    "aparencia": false,
+    "espacamento": 1.0,
+    "guiaLeitura": false,
+    "navegTeclado": false
+  }
 }
 ```
 
-### Consultar perfil
+Observação: no objeto `config`, o campo `preferencia` contém o e-mail do usuário autenticado.
+
+### Consultar Perfil
 
 ```http
 POST /api/v1/perfis/consultar
@@ -151,7 +200,7 @@ Body:
 }
 ```
 
-### Atualizar preferencias
+### Atualizar Preferências
 
 ```http
 PUT /api/v1/perfis
@@ -172,7 +221,7 @@ Body:
 }
 ```
 
-### Consultar auditoria
+### Consultar Auditoria
 
 ```http
 POST /api/v1/perfis/auditoria
@@ -193,11 +242,25 @@ Os erros retornam um corpo padronizado:
 
 ```json
 {
-  "timestamp": "2026-05-20T16:30:00",
+  "timestamp": "2026-05-21T20:00:00",
   "status": 401,
   "erro": "Unauthorized",
   "detalhes": [
-    "Token invalido."
+    "Token invalido ou expirado."
   ]
 }
+```
+
+## Testes
+
+Para executar a suíte de testes:
+
+```bash
+mvn test
+```
+
+Para executar a verificação de cobertura configurada no JaCoCo:
+
+```bash
+mvn verify
 ```
